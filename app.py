@@ -52,7 +52,7 @@ def predict_datapoint():
         except Exception as e:
             raise CustomException(e, sys)
 
-    return render_template('index.html')
+    return render_template('form1.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
