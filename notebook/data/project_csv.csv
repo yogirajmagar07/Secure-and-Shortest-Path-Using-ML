@@ -1,0 +1,20 @@
+longitude,latitude,amenity,name,religion,addr:street,crime,nearest police chowki,population density,rape,Kidnapping & Abduction_Total,Acid attack,Assault on Women,Sexual Harassment,use of criminal force to women,Stalking,Other Assault on Women,district,safety
+75.0670769,18.0965752,toll_booth,toll_booth,,,857,2.5,582320,91,305,212,54,9,26,123,37,central,3
+75.0671979,18.0966805,toll_booth,toll_booth,,,2005,17.4,2292958,234,719,494,86,57,99,248,68,south west,2
+75.0255781,18.1118483,post_office,Indapur Post Office,,Kasba,2008,2.7,2292958,266,683,469,85,34,74,274,123,south west,1
+75.0256002,18.112179,hospital,Dr. Kardile Accident and General Hospital,,,857,2.6,582320,91,305,212,54,9,26,123,37,central,3
+75.0260206,18.1086573,place_of_worship,Mahalaxmi Temple,hindu,Bajrang nagar,857,0.393,582320,91,305,212,54,9,26,123,37,central,3
+75.0271778,18.10857,place_of_worship,Jetvan Buddha Vihar,buddhist,Savta Mali Nagar,0,4.6,2543243,0,0,0,0,0,0,0,0,West,3
+75.0270021,18.1100114,place_of_worship,Aqsa Masjid,muslim,Qureshi Moholla Road,0,13.3,1674714,0,0,0,0,0,0,0,0,gautam buddh,1
+75.0259161,18.1113307,place_of_worship,JUMA MASJID,muslim,,857,0.65,582320,91,305,212,54,9,26,123,37,central,3
+75.0256563,18.1115159,place_of_worship,Mosque,muslim,,0,20.1,1674714,0,0,0,0,0,0,0,0,gautam buddh,3
+75.029371,18.1121275,place_of_worship,,hindu,,0,4.8,1674714,0,0,0,0,0,0,0,0,gautam buddh,1
+75.0269477,18.1150122,hospital,"Sushrut Hospital, Indapur",,,2314,45,2241624,237,1047,492,171,46,47,224,50,north east,3
+75.0269762,18.1157975,bank,State Bank of India,,,2762,4.2,2731929,280,627,595,150,39,0,406,665,south,0
+75.0251131,18.1205606,hospital,Yashodeep Hospital,,,2314,18.2,2241624,237,1047,492,171,46,47,224,50,north east,0
+75.0242172,18.1209749,hospital,Magar Accident and Eye Hospital.,,,857,0.7,582320,91,305,212,54,9,26,123,37,central,3
+75.0248402,18.1209854,hospital,Raut Hospital,,Kalthan Road,857,1.5,582320,91,305,212,54,9,26,123,37,central,3
+75.0282797,18.1170198,bus_station,Indapur MSRTC Bus Stand,,,857,1.1,582320,91,305,212,54,9,26,123,37,central,3
+75.0258983,18.1206808,hospital,"Sub District Hospital, Indapur",,,857,2.5,582320,91,305,212,54,9,26,123,37,central,3
+75.0257917,18.1210564,clinic,Ojas Ent and Dental Clinic,,,2762,14.8,2731929,280,627,595,150,39,0,406,665,south,0
+75.0298679,18.1200229,college,ITI COLLEGE INDAPUR,,,1684,4,3656539,165,663,404,109,23,61,208,51,north west,1
