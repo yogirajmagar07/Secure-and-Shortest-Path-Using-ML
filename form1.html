@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety Prediction</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        #map { width: 100%; height: 500px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Safety Prediction</h1>
+        <form id="locationForm" action="/" method="post" onsubmit="fetchCoordinates(event)">
+            <div class="form-group">
+                <label for="location">Location Name</label>
+                <input type="text" class="form-control" id="location" name="location" placeholder="Enter location name" required>
+            </div>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="religion">Religion</label>
+                <input type="text" class="form-control" id="religion" name="religion" required>
+            </div>
+            <div class="form-group">
+                <label for="addr_street">Address Street</label>
+                <input type="text" class="form-control" id="addr_street" name="addr_street" required>
+            </div>
+            <div class="form-group">
+                <label for="crime">Crime Rate</label>
+                <input type="number" step="0.01" class="form-control" id="crime" name="crime" required>
+            </div>
+            <div class="form-group">
+                <label for="nearest_police_chowki">Nearest Police Chowki</label>
+                <input type="number" step="0.01" class="form-control" id="nearest_police_chowki" name="nearest_police_chowki" required>
+            </div>
+            <div class="form-group">
+                <label for="population_density">Population Density</label>
+                <input type="number" step="0.01" class="form-control" id="population_density" name="population_density" required>
+            </div>
+            <div class="form-group">
+                <label for="rape">Rape Incidents</label>
+                <input type="number" step="0.01" class="form-control" id="rape" name="rape" required>
+            </div>
+            <div class="form-group">
+                <label for="kidnapping_abduction_total">Kidnapping & Abduction Total</label>
+                <input type="number" step="0.01" class="form-control" id="kidnapping_abduction_total" name="kidnapping_abduction_total" required>
+            </div>
+            <div class="form-group">
+                <label for="acid_attack">Acid Attack Incidents</label>
+                <input type="number" step="0.01" class="form-control" id="acid_attack" name="acid_attack" required>
+            </div>
+            <div class="form-group">
+                <label for="assault_on_women">Assault on Women</label>
+                <input type="number" step="0.01" class="form-control" id="assault_on_women" name="assault_on_women" required>
+            </div>
+            <div class="form-group">
+                <label for="sexual_harassment">Sexual Harassment</label>
+                <input type="number" step="0.01" class="form-control" id="sexual_harassment" name="sexual_harassment" required>
+            </div>
+            <div class="form-group">
+                <label for="use_of_criminal_force_to_women">Use of Criminal Force to Women</label>
+                <input type="number" step="0.01" class="form-control" id="use_of_criminal_force_to_women" name="use_of_criminal_force_to_women" required>
+            </div>
+            <div class="form-group">
+                <label for="stalking">Stalking Incidents</label>
+                <input type="number" step="0.01" class="form-control" id="stalking" name="stalking" required>
+            </div>
+            <div class="form-group">
+                <label for="other_assault_on_women">Other Assault on Women</label>
+                <input type="number" step="0.01" class="form-control" id="other_assault_on_women" name="other_assault_on_women" required>
+            </div>
+            <div class="form-group">
+                <label for="district">District</label>
+                <input type="text" class="form-control" id="district" name="district" required>
+            </div>
+            <div class="form-group">
+                <label for="amenity">Amenity</label>
+                <input type="text" class="form-control" id="amenity" name="amenity" required>
+            </div>
+            <input type="hidden" id="longitude" name="longitude">
+            <input type="hidden" id="latitude" name="latitude">
+            <button type="submit" class="btn btn-primary">Submit and Predict Safety</button>
+        </form>
+        <div id='map'></div>
+    </div>
+
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoieW9naXJham1hZ2FyNzciLCJhIjoiY2xyZXg4OW5jMGhkYzJrbzllcXBldGIyMCJ9.2kdbdRnH3siSt3lPDKeKnQ';
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [75.0670769, 18.0965752],
+            zoom: 10
+        });
+
+        async function fetchCoordinates(event) {
+            event.preventDefault();
+
+            const location = document.getElementById('location').value;
+            const accessToken = 'YOUR_MAPBOX_ACCESS_TOKEN';
+            const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(location)}.json?access_token=${accessToken}`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.features && data.features.length > 0) {
+                    const [lng, lat] = data.features[0].geometry.coordinates;
+                    document.getElementById('latitude').value = lat;
+                    document.getElementById('longitude').value = lng;
+
+                    // Add marker to map
+                    new mapboxgl.Marker()
+                        .setLngLat([lng, lat])
+                        .addTo(map);
+
+                    // Adjust map center and zoom
+                    map.setCenter([lng, lat]);
+                    map.setZoom(14);
+
+                    // Submit the form
+                    document.getElementById('locationForm').submit();
+                } else {
+                    alert('No coordinates found for this location.');
+                }
+            } catch (error) {
+                console.error('Error fetching coordinates:', error);
+                alert('An error occurred while fetching coordinates.');
+            }
+        }
+    </script>
+</body>
+</html>
