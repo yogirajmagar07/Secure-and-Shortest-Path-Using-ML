@@ -15,6 +15,7 @@ app.secret_key = 'your_secret_key'
 # In-memory user storage
 users = {}
 
+
 @app.route('/')
 def home():
     return render_template('home.html')
