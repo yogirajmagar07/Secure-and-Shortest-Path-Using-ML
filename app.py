@@ -1,4 +1,4 @@
-from flask import Flask,request,render_template
+from flask import Flask, render_template, request, redirect, url_for, flash
 import numpy as np
 import pandas as pd
 import sys
@@ -7,40 +7,53 @@ from src.exception import CustomException
 from sklearn.preprocessing import StandardScaler
 from src.pipeline.prediction_pipeline import CustomData,PredictPipeline
 
-application=Flask(__name__)
+app = Flask(__name__)
 
-app=application
-
-## Route for a home page
+# In-memory user storage
+users = {}
 
 @app.route('/')
-def index():
-    return render_template('index.html') 
+def home():
+    return render_template('home.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        
+        # Check if user exists and password matches
+        if username in users and users[username] == password:
+            flash('Login successful!', 'success')
+            return redirect('http://localhost:8081')
+        else:
+            flash('Invalid username or password', 'danger')
+    
+    return render_template('login.html')
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        
+        if username in users:
+            flash('Username already exists', 'danger')
+        else:
+            users[username] = password
+            flash('Signup successful! Please log in.', 'success')
+            return redirect(url_for('login'))
+    
+    return render_template('signup.html')
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/predict', methods=['GET', 'POST'])
 def predict_datapoint():
     if request.method == 'POST':
         try:
             data = CustomData(
                 longitude=request.form['longitude'],
-                latitude=request.form['latitude'],
-                name=request.form['name'],
-                religion=request.form['religion'],
-                addr_street=request.form['addr_street'],
-                crime=request.form['crime'],
-                nearest_police_chowki=request.form['nearest_police_chowki'],
-                population_density=request.form['population_density'],
-                rape=request.form['rape'],
-                kidnapping_abduction_total=request.form['kidnapping_abduction_total'],
-                acid_attack=request.form['acid_attack'],
-                assault_on_women=request.form['assault_on_women'],
-                sexual_harassment=request.form['sexual_harassment'],
-                use_of_criminal_force_to_women=request.form['use_of_criminal_force_to_women'],
-                stalking=request.form['stalking'],
-                other_assault_on_women=request.form['other_assault_on_women'],
-                district=request.form['district'],
-                amenity=request.form['amenity']
+                latitude=request.form['latitude']
             )
 
             pred_df = data.get_data_as_data_frame()
@@ -55,4 +68,5 @@ def predict_datapoint():
     return render_template('index.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0",port=80) 
+
