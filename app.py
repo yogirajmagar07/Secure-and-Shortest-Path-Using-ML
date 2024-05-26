@@ -8,7 +8,9 @@ from src.exception import CustomException
 from sklearn.preprocessing import StandardScaler
 from src.pipeline.prediction_pipeline import CustomData,PredictPipeline
 
+
 app = Flask(__name__)
+app.secret_key = 'your_secret_key'
 
 # In-memory user storage
 users = {}
@@ -38,7 +40,11 @@ def signup():
         username = request.form['username']
         password = request.form['password']
         
-        if username in users:
+        # Check if the username and password combination already exists
+        if username in users and users[username] == password:
+            flash('Username and password combination already exists. Please log in.', 'danger')
+            return redirect(url_for('login'))
+        elif username in users:
             flash('Username already exists', 'danger')
         else:
             users[username] = password
@@ -69,5 +75,4 @@ def predict_datapoint():
     return render_template('index.html')
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0",port=80) 
-
+    app.run(host="0.0.0.0",port=80)
